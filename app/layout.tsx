@@ -1,6 +1,6 @@
 import type { Metadata} from "next";
 import Link  from "next/link";
-import "./global.css";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Blog Pessoal - Diário de Projeto",
