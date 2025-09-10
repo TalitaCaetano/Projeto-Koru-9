@@ -3,29 +3,57 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0b0e14;
-  --fg: #e6edf3;
-  --muted: #9fb0c0;
-  --card: #0f1420;
-  --border: #1c2440;
+  /* 🌙 Modo escuro com nova paleta */
+  --bg: #3D3D2D;
+  --fg: #E4E3CF;
+  --muted: #BAB9A6;
+  --card: #676655;
+  --border: #90907E;
+  --accent: #BAB9A6;
 }
 
-html,
-body,
-#__next {
-  height: 100%;
+
+html.light {
+  --bg: #ECECDD;
+  --fg: #413E4A;
+  --muted: #73626E;
+  --card: #E4DDD6;
+  --border: #D4DDD6;
+  --accent: #C4DDD6;
 }
+
+
+
+
 
 body {
-  background: radial-gradient(
-      1200px 800px at 120% -10%,
-      #112045 0%,
-      transparent 60%
-    ),
-    radial-gradient(900px 600px at -10% 10%, #0f1c3d 0%, transparent 60%),
-    var(--bg);
-  color: var(--fg);
+  transition: background 0.5s ease, color 0.5s ease;
 }
+
+
+
+html.dark body {
+  background: linear-gradient(
+    180deg,
+    #3D3D2D 0%,
+    #676655 50%,
+    #90907E 100%
+  );
+  color: var(--fg);
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+html.light body {
+  background: linear-gradient(
+    180deg,
+    #ECECDD 0%,
+    #E4E3CD 50%,
+    #E4DDD6 100%
+  );
+  color: var(--fg);
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
 
 /* Tipografia */
 .prose p {
@@ -41,8 +69,12 @@ body {
   @apply text-xl font-semibold mt-6 mb-2;
 }
 .prose a {
-  @apply underline decoration-brand-400 hover:decoration-brand-300;
+  @apply underline decoration-[color:var(--accent)] hover:decoration-[color:var(--border)];
 }
+.prose a {
+  @apply underline decoration-[color:var(--accent)] hover:decoration-[color:var(--fg)];
+}
+
 .prose ul {
   @apply list-disc ml-6 mb-4;
 }
@@ -50,16 +82,39 @@ body {
   @apply list-decimal ml-6 mb-4;
 }
 .prose blockquote {
-  @apply border-l-4 border-brand-500 pl-4 italic text-brand-200;
+  @apply border-l-4 border-[color:var(--accent)] pl-4 italic text-[color:var(--muted)];
 }
+
 
 /* Extras */
 .btn {
-  @apply inline-flex items-center gap-2 rounded-2xl px-4 py-2 font-medium border border-[color:var(--border)] bg-[color:var(--card)] hover:bg-[#131a2b] transition;
+  @apply inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium border border-[color:var(--border)] bg-[color:var(--accent)] text-[color:var(--fg)] hover:bg-[color:var(--border)] transition-all duration-300 ease-in-out;
 }
 
+html.dark .btn {
+  @apply inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium border border-[color:var(--border)] bg-[color:var(--card)] text-[color:var(--fg)] hover:bg-[color:var(--border)] transition-all duration-300 ease-in-out;
+}
+
+
+
 .card {
-  @apply rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] shadow-xl shadow-black/20;
+  @apply rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] shadow-md shadow-[rgba(0,0,0,0.05)] transition-all duration-300 ease-in-out;
+}
+
+.card:hover {
+  @apply shadow-lg shadow-[rgba(0,0,0,0.08)] scale-[1.01];
+}
+
+
+/* 🎨 Aparência no modo escuro */
+html.dark .card {
+  @apply rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] shadow-xl shadow-black/20 hover:scale-[1.01] transition-all duration-300 ease-in-out;
+}
+
+
+/* 🌞 Aparência no modo claro */
+html.light .card:hover {
+  @apply shadow-lg shadow-[rgba(0,0,0,0.08)] scale-[1.01];
 }
 
 .navlink {
