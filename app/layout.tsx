@@ -21,7 +21,7 @@ export default function RootLayout({
           <header className="sticky top-0 z-50 backdrop-blur border-b border-[color:var(--border)]/80 bg-[color:var(--card)]/60">
             <nav className="mx-auto max-w-4xl px-4 py-3 flex items-center justify-between">
               <Link href="/" className="text-lg font-semibold">
-                Meu Blog ✍️
+                RegistraBlog ✍️
               </Link>
 
               <div className="flex items-center gap-3 text-sm">
@@ -39,7 +39,7 @@ export default function RootLayout({
           <main className="mx-auto max-w-4xl px-4 py-8">{children}</main>
 
           <footer className="mt-12 border-t border-[color:var(--border)]/80 py-8 text-center text-sm text-[color:var(--muted)]">
-            Feito com Next.js • {new Date().getFullYear()}
+             &copy;{new Date().getFullYear()}  • Feito por Talita Guimarães.Todos os Direitos reservado.
           </footer>
         </Providers>
       </body>

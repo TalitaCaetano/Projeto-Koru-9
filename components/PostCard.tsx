@@ -40,6 +40,21 @@ export default function PostCard({ post }: { post: Post }) {
           Ler post →
         </Link>
       </div>
+
+      {/* ✅ TAGS */}
+      {post.tags && (
+        <div className="mt-4 flex gap-2 flex-wrap">
+          {post.tags.map((tag) => (
+            <Link
+              key={tag}
+              href={`/tags/${tag}`}
+              className="px-2 py-1 text-xs rounded-full bg-[color:var(--card)] border border-[color:var(--border)] hover:bg-white/10 transition"
+            >
+              #{tag}
+            </Link>
+          ))}
+        </div>
+      )}
     </motion.article>
   );
 }

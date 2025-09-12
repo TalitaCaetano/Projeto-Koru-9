@@ -1,24 +1,43 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Container from "@/components/Container";
-import PostCard from "@/components/PostCard";
+import SearchPosts from "@/components/SearchPosts";
+import type { Post } from "@/lib/posts";
 import { getAllPosts } from "@/lib/posts";
-import PostList from "@/components/PostList";
 
+export default function HomePage() {
+  const [allPosts, setAllPosts] = useState<Post[]>([]);
 
+  useEffect(() => {
+    async function loadPosts() {
+      // ⚡ pega os posts fixos
+      const staticPosts = await getAllPosts();
 
-export default async function HomePage() {
-  const posts = await getAllPosts();
+      // ⚡ pega os posts do navegador
+      const saved = localStorage.getItem("custom-posts");
+      const customPosts: Post[] = saved ? JSON.parse(saved) : [];
+
+      // ⚡ junta os dois
+      setAllPosts([...staticPosts, ...customPosts]);
+    }
+
+    loadPosts();
+  }, []);
+
   return (
     <Container>
       <h1 className="text-3xl font-bold mb-6">Diário de Projeto</h1>
       <p className="text-[color:var(--muted)] mb-8 max-w-prose">
         Um blog minimalista construído com Next.js (App Router), para praticar
-        Serve Components, rotas dinâmicas e um toque interatividade.
+        Server Components, rotas dinâmicas e um toque interatividade.
       </p>
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {posts.map((post) => (
-          <PostCard key={post.slug} post={post} />
-        ))}
-      </section>
+
+      {allPosts.length === 0 ? (
+        <p>Carregando posts...</p>
+      ) : (
+        <SearchPosts posts={allPosts} />
+      )}
     </Container>
   );
 }
