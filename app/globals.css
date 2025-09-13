@@ -3,59 +3,47 @@
 @tailwind utilities;
 
 :root {
-  /* 🌙 Modo escuro com nova paleta */
-  --bg: #3D3D2D;
-  --fg: #E4E3CF;
-  --muted: #BAB9A6;
-  --card: #676655;
-  --border: #90907E;
-  --accent: #BAB9A6;
+  --bg: #1a1a1a;
+  --fg: #f5f5f5;
+  --muted: #a3a3a3;
+  --card: #2a2a2a;
+  --border: #404040;
+  --accent: #60a5fa;
 }
-
 
 html.light {
-  --bg: #ECECDD;
-  --fg: #413E4A;
-  --muted: #73626E;
-  --card: #E4DDD6;
-  --border: #D4DDD6;
-  --accent: #C4DDD6;
+  --bg: #f5f5f5;
+  --fg: #171717;
+  --muted: #737373;
+  --card: #ffffff;
+  --border: #e5e5e5;
+  --accent: #3b82f6;
 }
-
-
-
-
 
 body {
   transition: background 0.5s ease, color 0.5s ease;
 }
 
-
-
 html.dark body {
   background: linear-gradient(
     180deg,
-    #3D3D2D 0%,
-    #676655 50%,
-    #90907E 100%
+    #1a1a1a 0%,
+    #2a2a2a 50%,
+    #404040 100%
   );
   color: var(--fg);
-  transition: background 0.4s ease, color 0.4s ease;
 }
 
 html.light body {
   background: linear-gradient(
     180deg,
-    #ECECDD 0%,
-    #E4E3CD 50%,
-    #E4DDD6 100%
+    #f5f5f5 0%,
+    #ffffff 50%,
+    #e5e5e5 100%
   );
   color: var(--fg);
-  transition: background 0.4s ease, color 0.4s ease;
 }
 
-
-/* Tipografia */
 .prose p {
   @apply leading-7 mb-4 text-[17px];
 }
@@ -69,12 +57,8 @@ html.light body {
   @apply text-xl font-semibold mt-6 mb-2;
 }
 .prose a {
-  @apply underline decoration-[color:var(--accent)] hover:decoration-[color:var(--border)];
-}
-.prose a {
   @apply underline decoration-[color:var(--accent)] hover:decoration-[color:var(--fg)];
 }
-
 .prose ul {
   @apply list-disc ml-6 mb-4;
 }
@@ -85,36 +69,31 @@ html.light body {
   @apply border-l-4 border-[color:var(--accent)] pl-4 italic text-[color:var(--muted)];
 }
 
-
-/* Extras */
 .btn {
-  @apply inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium border border-[color:var(--border)] bg-[color:var(--accent)] text-[color:var(--fg)] hover:bg-[color:var(--border)] transition-all duration-300 ease-in-out;
+  @apply inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium
+        border border-[color:var(--border)]
+        transition-all duration-300 ease-in-out;
+}
+
+html.light .btn {
+  @apply bg-[color:var(--accent)] text-white hover:opacity-90;
 }
 
 html.dark .btn {
-  @apply inline-flex items-center gap-2 rounded-full px-4 py-2 font-medium border border-[color:var(--border)] bg-[color:var(--card)] text-[color:var(--fg)] hover:bg-[color:var(--border)] transition-all duration-300 ease-in-out;
+  @apply bg-[color:var(--card)] text-[color:var(--fg)] hover:bg-[color:var(--border)];
 }
 
-
-
 .card {
-  @apply rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] shadow-md shadow-[rgba(0,0,0,0.05)] transition-all duration-300 ease-in-out;
+  @apply rounded-xl border border-[color:var(--border)] bg-[color:var(--card)]
+        shadow-md shadow-[rgba(0,0,0,0.05)] transition-all duration-300 ease-in-out;
 }
 
 .card:hover {
   @apply shadow-lg shadow-[rgba(0,0,0,0.08)] scale-[1.01];
 }
 
-
-/* 🎨 Aparência no modo escuro */
 html.dark .card {
-  @apply rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] shadow-xl shadow-black/20 hover:scale-[1.01] transition-all duration-300 ease-in-out;
-}
-
-
-/* 🌞 Aparência no modo claro */
-html.light .card:hover {
-  @apply shadow-lg shadow-[rgba(0,0,0,0.08)] scale-[1.01];
+  @apply shadow-xl shadow-black/20;
 }
 
 .navlink {
@@ -122,4 +101,68 @@ html.light .card:hover {
 }
 .active {
   @apply bg-white/10;
+}
+
+.circles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.circles li {
+  position: absolute;
+  display: block;
+  list-style: none;
+  width: 20px;
+  height: 20px;
+  bottom: -150px;
+  animation: animate-bubble 25s linear infinite;
+}
+
+
+html.dark .circles li {
+  background: rgba(192, 132, 252, 0.15); /* Roxo vibrante com opacidade */
+}
+
+html.light .circles li {
+  background: rgba(59, 130, 246, 0.2); /* Azul (--accent) */
+}
+html.light .circles li:nth-child(2n) {
+  background: rgba(236, 72, 153, 0.2); /* Rosa */
+}
+html.light .circles li:nth-child(3n) {
+  background: rgba(249, 115, 22, 0.2); /* Laranja */
+}
+html.light .circles li:nth-child(5n) {
+    background: rgba(16, 185, 129, 0.2); /* Verde esmeralda */
+}
+
+
+/* Posições e delays */
+.circles li:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+.circles li:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+.circles li:nth-child(3) { left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+.circles li:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+.circles li:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+.circles li:nth-child(6) { left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
+.circles li:nth-child(7) { left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
+.circles li:nth-child(8) { left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
+.circles li:nth-child(9) { left: 20%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 35s; }
+.circles li:nth-child(10) { left: 85%; width: 150px; height: 150px; animation-delay: 0s; animation-duration: 11s; }
+
+
+@keyframes animate-bubble {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+    border-radius: 0;
+  }
+  100% {
+    transform: translateY(-1000px) rotate(720deg);
+    opacity: 0;
+    border-radius: 50%;
+  }
 }

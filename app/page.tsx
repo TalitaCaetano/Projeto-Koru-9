@@ -11,14 +11,14 @@ export default function HomePage() {
 
   useEffect(() => {
     async function loadPosts() {
-      // ⚡ pega os posts fixos
+      // pega os estáticos
       const staticPosts = await getAllPosts();
 
-      // ⚡ pega os posts do navegador
+      // pega os do localStorage
       const saved = localStorage.getItem("custom-posts");
       const customPosts: Post[] = saved ? JSON.parse(saved) : [];
 
-      // ⚡ junta os dois
+      // junta os dois
       setAllPosts([...staticPosts, ...customPosts]);
     }
 
@@ -34,7 +34,7 @@ export default function HomePage() {
       </p>
 
       {allPosts.length === 0 ? (
-        <p>Carregando posts...</p>
+        <p className="text-[color:var(--muted)]">Nenhum post encontrado.</p>
       ) : (
         <SearchPosts posts={allPosts} />
       )}

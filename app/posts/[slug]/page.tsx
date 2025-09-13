@@ -1,34 +1,51 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useParams, notFound } from "next/navigation";
+import Link from "next/link";
 import Container from "@/components/Container";
 import LikeButton from "@/components/LikeButton";
 import { formatDate } from "@/lib/formatDate";
-import { getAllSlugs, getPostBySlug, getAdjacentPosts } from "@/lib/posts";
-import { notFound } from "next/navigation";
-import type { Metadata } from "next";
-import Link from "next/link";
+import { posts as staticPosts, getAdjacentPosts, Post } from "@/lib/posts";
 
+export default function PostPage() {
+  const params = useParams();
+  const slug = params.slug as string;
 
+  const [post, setPost] = useState<Post | null | undefined>(undefined);
 
+  useEffect(() => {
+    if (!slug) return;
+    const saved = localStorage.getItem("custom-posts");
+    const customPosts: Post[] = saved ? JSON.parse(saved) : [];
+    const customPost = customPosts.find((p) => p.slug === slug);
 
-export async function generateStaticParams() {
-  return getAllSlugs();
-}
+    if (customPost) {
+      setPost(customPost);
+      return;
+    }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
-  const post = await getPostBySlug(params.slug);
-  if (!post) return { title: "Post não encontrado" };
-  return { title: `${post.title} — Diário` };
-}
+    const staticPost = staticPosts.find((p) => p.slug === slug);
+    setPost(staticPost || null);
+  }, [slug]);
 
-export default async function PostPage({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug);
-  if (!post) return notFound();
+  if (post === undefined) {
+    return (
+      <div className="animate-pulse space-y-3">
+        <div className="h-8 w-2/3 rounded bg-[color:var(--card)]" />
+        <div className="h-4 w-1/3 rounded bg-[color:var(--card)]" />
+        <div className="h-4 w-full rounded bg-[color:var(--card)]" />
+        <div className="h-4 w-11/12 rounded bg-[color:var(--card)]" />
+      </div>
+    );
+  }
 
+  if (post === null) {
+    notFound();
+  }
+
+  const { prev, next } = getAdjacentPosts(slug);
   const paragraphs = post.content.split("\n\n");
-  const { prev, next } = getAdjacentPosts(params.slug);
 
   return (
     <Container>
@@ -38,17 +55,16 @@ export default async function PostPage({ params }: { params: { slug: string } })
           {formatDate(post.date)} • {post.author}
         </p>
 
-        {/* ✅ TAGS */}
         {post.tags && (
           <div className="mt-2 flex gap-2 flex-wrap">
             {post.tags.map((tag) => (
-              <a
+              <Link
                 key={tag}
                 href={`/tags/${tag}`}
                 className="px-2 py-1 text-xs rounded-full bg-[color:var(--card)] border border-[color:var(--border)]"
               >
                 #{tag}
-              </a>
+              </Link>
             ))}
           </div>
         )}
@@ -62,8 +78,6 @@ export default async function PostPage({ params }: { params: { slug: string } })
         <LikeButton postId={post.slug} />
       </div>
 
-      
-      {/* ✅ Navegação entre posts */}
       <div className="mt-12 flex justify-between items-center">
         {prev ? (
           <Link href={`/posts/${prev.slug}`} className="btn">
@@ -82,11 +96,10 @@ export default async function PostPage({ params }: { params: { slug: string } })
       </div>
 
       <div className="mt-10">
-        <a className="btn" href="/">
+        <Link className="btn" href="/">
           ← Voltar para Home
-        </a>
+        </Link>
       </div>
     </Container>
   );
 }
-

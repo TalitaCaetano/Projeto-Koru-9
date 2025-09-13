@@ -4,11 +4,11 @@ export type Post = {
   date: string; // ISO
   author: string;
   excerpt: string;
-  content: string; // texto com parágrafos separados por \n\n
+  content: string;
   tags?: string[];
 };
 
-const posts: Post[] = [
+export const posts: Post[] = [
   {
     slug: "dia-1-decisoes-e-setup",
     title: "Dia 1 — Decidindo o tema e criando o projeto",
@@ -35,7 +35,7 @@ e aquele alívio de ver a página inicial no ar.`,
     content: `Criei o layout global com um header bonito, leve e
 funcional. Gosto de interfaces que somem quando não são
 necessárias e aparecem quando fazem falta.\n\nAdicionei a
-navegação entre Home e Sobre. Parece pouco, mas esse esqueleto dá segurança para evoluir.\n\nAjustei a tipografia e um gradiente de fundo para dar identidade sem exageros.`,
+navegação entre Home, Sobre e Novo Post. Parece pouco, mas esse esqueleto dá segurança para evoluir.\n\nAjustei a tipografia e um gradiente de fundo para dar identidade sem exageros.`,
     tags: ["layout", "tailwind"],
   },
   {
@@ -87,8 +87,8 @@ texto tem sua casa.\n\nO Next faz a mágica de gerar as páginas baseadas no par
       "Focus visível, contraste melhor e microdetalhes que elevam o todo.",
     content: `Reforcei o contraste de botões e links. Ajustei o
 foco do teclado e testei a navegação sem mouse.\n\nFoi o dia dos
-pequenos luxos: sombras suaves, bordas precisas e transições
-discretas.\n\nO resultado é uma sensação de polimento — quase
+pequenos luxos: modo escuro, sombras suaves, bordas precisas, transições
+discretas e acabei colocando alguns detalhes flutuantes no fundo para ter mais animações.\n\nO resultado é uma sensação de polimento — quase
 imperceptível, mas muito sentida.`,
     tags: ["detalhes finais"],
   },
@@ -109,7 +109,7 @@ código ganhar alma.`,
 ];
 
 export async function getAllPosts(): Promise<Post[]> {
-  // ✅ Mais antigo → mais novo (1 → 8)
+  
   return [...posts].sort((a, b) => (a.date > b.date ? 1 : -1));
 }
 
@@ -122,14 +122,14 @@ export function getAllSlugs() {
 }
 
 export function getAdjacentPosts(slug: string) {
-  // ✅ Também em ordem cronológica
+ 
   const sorted = [...posts].sort((a, b) => (a.date > b.date ? 1 : -1));
   const index = sorted.findIndex((p) => p.slug === slug);
 
   if (index === -1) return { prev: null, next: null };
 
-  const prev = index > 0 ? sorted[index - 1] : null;           // post anterior
-  const next = index < sorted.length - 1 ? sorted[index + 1] : null; // próximo post
+  const prev = index > 0 ? sorted[index - 1] : null;          
+  const next = index < sorted.length - 1 ? sorted[index + 1] : null; 
 
   return { prev, next };
 }

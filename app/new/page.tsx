@@ -1,31 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Container from "@/components/Container";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import type { Post } from "@/lib/posts";
 
 export default function NewPostPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [posts, setPosts] = useState<Post[]>([]);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("custom-posts");
-    if (saved) {
-      setPosts(JSON.parse(saved));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("custom-posts", JSON.stringify(posts));
-  }, [posts]);
+  const router = useRouter();
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!title.trim() || !content.trim()) return;
 
     const newPost: Post = {
-      slug: `custom-${Date.now()}`, // slug único
+      slug: `custom-${Date.now()}`,
       title,
       date: new Date().toISOString(),
       author: "Você",
@@ -34,34 +22,40 @@ export default function NewPostPage() {
       tags: ["atualização"],
     };
 
-    setPosts([...posts, newPost]);
-    setTitle("");
-    setContent("");
+    const saved = localStorage.getItem("custom-posts");
+    const posts: Post[] = saved ? JSON.parse(saved) : [];
+
+  
+    localStorage.setItem("custom-posts", JSON.stringify([...posts, newPost]));
+
+    router.push("/");
   }
 
   return (
-    <Container>
-      <h1 className="text-2xl font-bold mb-6">Nova atualização</h1>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="max-w-2xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Novo Post</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
-          type="text"
+          className="border px-3 py-2 rounded"
           placeholder="Título"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full px-4 py-2 rounded-lg border border-[color:var(--border)] bg-[color:var(--card)] text-[color:var(--fg)]"
         />
         <textarea
+          className="border px-3 py-2 rounded"
           placeholder="Conteúdo"
+          rows={6}
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          rows={5}
-          className="w-full px-4 py-2 rounded-lg border border-[color:var(--border)] bg-[color:var(--card)] text-[color:var(--fg)]"
         />
-        <button type="submit" className="btn">
+        <button
+          type="submit"
+          className="btn bg-blue-600 text-white hover:bg-blue-700"
+        >
           Publicar
         </button>
       </form>
-    </Container>
+    </div>
   );
 }
+

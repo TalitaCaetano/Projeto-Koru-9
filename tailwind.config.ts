@@ -21,6 +21,23 @@ const config: Config = {
           900: "#1a327f",
         },
       },
+      keyframes: {
+        "animate-bubble": {
+          "0%": {
+            transform: "translateY(0) rotate(0deg)",
+            opacity: "1",
+            borderRadius: "0",
+          },
+          "100%": {
+            transform: "translateY(-1000px) rotate(720deg)",
+            opacity: "0",
+            borderRadius: "50%",
+          },
+        },
+      },
+      animation: {
+        "animate-bubble": "animate-bubble 25s linear infinite",
+      },
     },
   },
   plugins: [],
