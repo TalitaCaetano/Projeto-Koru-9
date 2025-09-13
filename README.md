@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+DevChronicles — Diário de Projeto ✍️
+Um blog minimalista e moderno construído com Next.js (App Router), criado como um diário de projeto para documentar a jornada de desenvolvimento, aprendizados e decisões técnicas.
+---------------------------------------#########---------------------------------------
+Visão Geral
+O DevChronicles é uma aplicação web que simula um blog pessoal, focando em uma experiência de usuário limpa, agradável e interativa. O projeto foi desenvolvido para explorar e praticar conceitos modernos do ecossistema React, como Server Components, rotas dinâmicas, e interatividade no lado do cliente.
+---------------------------------------#########---------------------------------------
+Funcionalidades
+Listagem de Posts: A página inicial exibe todos os posts, combinando dados estáticos e posts criados pelo usuário, renderizados no servidor para melhor performance.
 
-## Getting Started
+Páginas Dinâmicas: Cada post possui uma URL única e dinâmica, gerada a partir de seu slug/page.tsx].
 
-First, run the development server:
+Criação de Posts: Usuários podem criar novos posts através de um formulário simples. Os posts são salvos no localStorage do navegador, permitindo persistência de dados sem um backend complexo.
+---------------------------------------#########---------------------------------------
+Interatividade:
 
-```bash
+Botão de Curtir: Um botão de "Curtir" com animações fluidas e contagem de likes que persiste no localStorage.
+
+Busca de Posts: Um campo de busca na página inicial para filtrar posts por título ou conteúdo em tempo real.
+
+Tema Claro e Escuro: Botão para alternar entre os modos de visualização claro e escuro, сom transições suaves.
+---------------------------------------#########---------------------------------------
+Design e Estilo:
+
+Interface estilizada com Tailwind CSS, seguindo uma abordagem utility-first.
+
+Animações sutis com Framer Motion para melhorar a experiência do usuário.
+
+Fundo animado com bolhas flutuantes para um toque visual dinâmico.
+---------------------------------------#########---------------------------------------
+Tecnologias Utilizadas
+Framework: Next.js (com App Router)
+
+Linguagem: TypeScript
+
+Estilização: Tailwind CSS
+
+Animações: Framer Motion
+
+Gerenciamento de Tema: next-themes
+
+Linting: ESLint
+---------------------------------------#########---------------------------------------
+Como Executar o Projeto
+Siga os passos abaixo para rodar o projeto em seu ambiente de desenvolvimento.
+
+Pré-requisitos:
+
+Node.js (versão 18.18.0 ou superior)
+
+Um gerenciador de pacotes (npm, yarn, pnpm ou bun)
+---------------------------------------#########---------------------------------------
+1. Clone o repositório:
+
+Bash
+
+git clone https://github.com/seu-usuario/projeto-koru-9.git
+cd projeto-koru-9
+2. Instale as dependências:
+---------------------------------------#########---------------------------------------
+Bash
+
+npm install
+# ou
+yarn install
+# ou
+pnpm install
+# ou
+bun install
+---------------------------------------#########---------------------------------------
+3. Inicie o servidor de desenvolvimento:
+
+Bash
+
 npm run dev
-# or
+# ou
 yarn dev
-# or
+# ou
 pnpm dev
-# or
+# ou
 bun dev
-```
+Abra http://localhost:3000 em seu navegador para ver o resultado. A página será atualizada automaticamente conforme você edita os arquivos.
+---------------------------------------#########---------------------------------------
+Estrutura do Projeto
+/app: Contém todas as rotas, páginas e layouts, utilizando o App Router do Next.js.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+/app/api: Rotas de API (se aplicável).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+/app/(pages): Arquivos de páginas como about, new, etc.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+/app/posts/[slug]: Rota dinâmica para exibir posts individuais.
 
-## Learn More
+/components: Componentes React reutilizáveis, como PostCard, LikeButton e ThemeToggle.
 
-To learn more about Next.js, take a look at the following resources:
+/lib: Funções auxiliares e a fonte de dados estática dos posts.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+/public: Arquivos estáticos, como imagens e fontes.
